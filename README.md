@@ -5,4 +5,5 @@ Twitter is outdated, a lot of people is not satisfied with the platform anymore.
 
 Creators:
 - Shyndali Uldana
-- 
+- Shakhizada Zhansulu 
+- Barlykov Beket
