@@ -1,11 +1,48 @@
 from rest_framework import serializers
-from api.models import User, Tweet, Like, Followers, Comment
+from api.models import Profile, Tweet, Like, Followers, Comment
+from django.contrib.auth.models import User
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["pfp", "bio"]
 
 
 class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(required=False)
+    password = serializers.CharField(write_only=True, required=False)
+    username = serializers.CharField(required=False)
+
     class Meta:
         model = User
-        fields = ["id", "username", "first_name", "last_name", "email", "pfp", "bio"]
+        fields = ["id", "username", "email", "password", "profile"]
+
+    def create(self, validated_data):
+        profile_data = validated_data.pop("profile", {})
+        password = validated_data.pop("password")
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        Profile.objects.create(user=user, **profile_data)
+        return user
+
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop("profile", {})
+        password = validated_data.pop("password", None)
+
+        instance.username = validated_data.get("username", instance.username)
+        instance.email = validated_data.get("email", instance.email)
+        if password:
+            instance.set_password(password)
+        instance.save()
+
+        profile = instance.profile
+        profile.pfp = profile_data.get("pfp", profile.pfp)
+        profile.bio = profile_data.get("bio", profile.bio)
+        profile.save()
+
+        return instance
 
 
 class LikeSerializer(serializers.ModelSerializer):
