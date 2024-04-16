@@ -1,0 +1,33 @@
+ <div class="avatar-container">
+    <div class="icon-wrapper">
+        <div *ngIf="selectedFile" class="img-preview-container">
+
+        <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+            [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+        </div>
+
+        <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+            <div class="img-spinning-circle"></div>
+        </div>
+
+        <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+        <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+        </div>
+        <input #imageInput type="file" id="avatar-input-file" accept="image/*" (change)="processFile(imageInput)" formControlName="image"/>
+        <mat-icon class="icon" fontIcon="edit"></mat-icon>
+    </div>
+</div>
+
+<div *ngIf="selectedFile" class="img-preview-container">
+
+  <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+       [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+  </div>
+
+  <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+    <div class="img-spinning-circle"></div>
+  </div>
+
+  <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+  <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+</div>

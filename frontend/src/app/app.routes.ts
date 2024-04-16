@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginFormComponent},
+    { path: '', component: ReactiveFormComponent},
 ];
