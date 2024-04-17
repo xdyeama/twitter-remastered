@@ -17,13 +17,13 @@ Backend done on Django
 
 ## API Reference
 
-* [Users](##Users)
-* [Followers](##Followers)
-* [Tweets](##Tweets)
-* [Likes](##Likes)
-* [Comments](##Comments)
+* [Users](#Users)
+* [Followers](#Followers)
+* [Tweets](#Tweets)
+* [Likes](#Likes)
+* [Comments](#Comments)
 
-## Users
+# Users
 
 ### Get all users
 
@@ -133,7 +133,7 @@ Request body example - all fields are optional
 | :-------- | :------- | :-------------------------------- |
 | `banner`      | `file` | **Required**. new banner|
 
-## Followers
+# Followers
 
 ### Get followers and followings
 
@@ -209,7 +209,7 @@ Request body example - temporary solution
 ```
 **Result**: `follower_id` now dont follow `id`
 
-## Tweets
+# Tweets
 
 ### Get all tweets
 
@@ -268,7 +268,7 @@ Response body example
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int` | **Required**. Id of item to fetch |
 
-## Likes
+# Likes
 
 ### Get list of users who liked this tweet
 
@@ -333,7 +333,7 @@ Request body example - temporary solution
 ```
 **Result**: `user_id` unliked `id` tweet
 
-## Comment
+# Comment
 
 ### Get all comments under tweet
 
