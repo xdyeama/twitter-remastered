@@ -62,3 +62,20 @@ def update_pfp(request, id):
 
     serializer = ProfileSerializer(profile)
     return Response(serializer.data)
+
+
+@api_view(["PATCH"])
+def update_banner(request, id):
+    profile = Profile.objects.get(user_id=id)
+
+    if "banner" not in request.FILES:
+        return Response({"error": "No file provided"}, status=400)
+
+    banner_file = request.FILES["banner"]
+
+    # Update profile picture
+    profile.banner = banner_file
+    profile.save()
+
+    serializer = ProfileSerializer(profile)
+    return Response(serializer.data)
