@@ -1,0 +1,33 @@
+<div class="tweet">
+    <div class="pfp-holder">
+        <img class="pfp" src="{{'http://127.0.0.1:8000' + tweet.user.profile.pfp}}" />
+    </div>
+    <div class="tweet-contents">
+        <div class="info">
+
+            <p><a [routerLink]="['', tweet.user.username]"><strong>{{tweet.user.profile.name}}</strong></a>
+                {{'@' + tweet.user.username +' · ' + tweet.created_at}} </p>
+
+            <button (click)="confirmDelete(tweet)">...</button>
+        </div>
+        <div class=" content">
+            <p>{{tweet.content}}</p>
+        </div>
+        <hr>
+        <div class="stats">
+            <a [routerLink]="['/tweets', tweet.id]">
+                <ng-icon name=" heroChatBubbleOvalLeft"></ng-icon></a>
+            <p>{{tweet.comments_count}}</p>
+            <ng-icon (click)="like()" name="heroHeart" id="like" [class.liked]="isliked"></ng-icon>
+            <p>{{tweet.likes_count}}</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showConfirmModal" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to delete this tweet?</p>
+        <button id="delete" (click)="deleteTweet(tweet)">Delete</button>
+        <button id="cancel" (click)="showConfirmModal = false">Cancel</button>
+    </div>
+</div>

@@ -22,17 +22,17 @@ class UserList(APIView):
 
 
 class UserDetail(APIView):
-    def get(self, request, id):
+    def get(self, request, username):
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(username=username)
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request, id):
+    def patch(self, request, username):
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(username=username)
             serializer = UserSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -41,15 +41,16 @@ class UserDetail(APIView):
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id):
-        user = User.objects.get(id=id)
+    def delete(self, request, username):
+        user = User.objects.get(username=username)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(["PATCH"])
-def update_pfp(request, id):
-    profile = Profile.objects.get(user_id=id)
+def update_pfp(request, username):
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user_id=user.id)
 
     if "pfp" not in request.FILES:
         return Response({"error": "No file provided"}, status=400)
@@ -65,8 +66,9 @@ def update_pfp(request, id):
 
 
 @api_view(["PATCH"])
-def update_banner(request, id):
-    profile = Profile.objects.get(user_id=id)
+def update_banner(request, username):
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user_id=user.id)
 
     if "banner" not in request.FILES:
         return Response({"error": "No file provided"}, status=400)

@@ -36,3 +36,13 @@ class LikesList(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Like.DoesNotExist as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LikeDetail(APIView):
+    def delete(self, request, id):
+        try:
+            like = Like.objects.get(id=id)
+            like.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Like.DoesNotExist as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

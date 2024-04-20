@@ -1,0 +1,32 @@
+<div class="main-holder">
+    <div class="page-feed">
+        <div class="user-header">
+            <div id="banner-holder">
+                <img id="banner" src="{{'http://127.0.0.1:8000' + user.profile.banner}}" />
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-right: 50px;">
+                <div id="pfp-holder">
+                    <img id="pfp" src="{{'http://127.0.0.1:8000' + user.profile.pfp}}" />
+                </div>
+                <button>Edit profile</button>
+            </div>
+            <h2>{{user.profile.name}}</h2>
+            <p>{{'@' + user.username}}</p>
+            <p id="bio">{{user.profile.bio}}</p>
+            <p><strong>{{followersList.followed.length}}</strong> Followings
+                <strong>{{followersList.followers.length}}</strong> Followers
+            </p>
+        </div>
+        <br>
+        <hr>
+        <div *ngIf="tweets.length==0" class="no-tweets">
+            <h1>You don't have any posts yet!</h1>
+            <img src="https://pbs.twimg.com/media/FVSl7zQVIAAPk_m.png">
+        </div>
+        <div *ngIf="tweets.length!=0">
+            <div *ngFor="let tweet of tweets">
+                <app-tweet [tweet]="tweet" (remove)="onTweetRemove($event)"></app-tweet>
+            </div>
+        </div>
+    </div>
+</div>
