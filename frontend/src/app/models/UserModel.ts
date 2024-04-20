@@ -8,7 +8,7 @@ export class UserModel{
     password = model.required<string>();
     name = model.required<string>();
     surname = model.required<string>();
-    image = model<string>();
+    image = model<string | null>();
     
     constructor(email: string = "", password: string = "", name: string = "", surname: string="", image: string = ""){}
 }

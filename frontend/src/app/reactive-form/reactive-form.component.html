@@ -1,8 +1,7 @@
 <section class="login-page_section">
     <div class="back-arrow_container">
-    <button class="back-arrow_button" *ngIf="formType != getFormType.LOGIN"><img class="back-arrow_img" src="../../assets/back-arrow.png"/></button>
     </div>
-    <form id="login-form" class="custom_form" [class.active]="formType == getFormType.LOGIN" *ngIf="formType == getFormType.LOGIN" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+    <form id="login-form" class="custom_form" [class.active]="formType == getFormType.LOGIN" *ngIf="formType == getFormType.LOGIN" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" autocomplete="off">
         <img src="../../assets/logo.png" class="login_logo"/> 
         <h2 class="login_title">Log in to Twitter</h2>
         <div class="inputs_container">
@@ -28,7 +27,7 @@
             <button class="brdl_button">Sign up for Twitter</button>
         </div>
     </form>
-    <form  *ngIf="formType == getFormType.REGISTER" id="register_form" class="custom_form register_form" [class.active]="formType == getFormType.REGISTER" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+    <form  *ngIf="formType == getFormType.REGISTER" id="register_form" class="custom_form register_form" [class.active]="formType == getFormType.REGISTER" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" autocomplete="off">
         <img src="../../assets/logo.png" class="login_logo"/> 
         <h2 class="login_title">Register to Twitter</h2>
         <div class="inputs_container">
@@ -53,9 +52,9 @@
                 </div>
             </div>
         </div>
-        <button class="submit_button" type="submit" [disabled]="!registerForm.valid">Register</button>
+        <button class="submit_button" type="submit" >Register</button>
     </form>
-    <form *ngIf="formType == getFormType.INFO" id="info_form" class="custom_form" [class.active]="formType == getFormType.INFO" [formGroup]="infoForm" (ngSubmit)="onInfoSubmit()">
+    <form *ngIf="formType == getFormType.INFO" id="info_form" class="custom_form" [class.active]="formType == getFormType.INFO" [formGroup]="infoForm" (ngSubmit)="onInfoSubmit()" autocomplete="off">
         <img src="../../assets/logo.png" class="login_logo"/> 
         <h2 class="login_title">Register to Twitter</h2>
         <div class="inputs_container adjust_container">
@@ -67,6 +66,6 @@
                 <input class="input" type="text" placeholder="Your surname" formControlName="surname" required/>
             </div>
         </div>
-        <button class="submit_button" type="submit" [disabled]="!infoForm.valid">Register</button>
+        <button class="submit_button" type="submit" >Register</button>
     </form>
 </section>

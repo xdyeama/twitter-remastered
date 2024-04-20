@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators'
+import { HttpClient } from '@angular/common/http';
 
 
 export interface AuthModel{ 
@@ -16,7 +17,7 @@ export class AuthService {
   isUserLoggedIn: boolean = false
   jwt_token: string = ""
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
   login(userName: string, password: string): Observable<boolean>{
     console.log(userName)

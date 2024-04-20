@@ -23,7 +23,7 @@ export enum FormType{
   styleUrl: './reactive-form.component.css'
 })
 export class ReactiveFormComponent implements OnInit{
-  @Input() formType: FormType = FormType.INFO;
+  @Input() formType: FormType = FormType.LOGIN;
   // user: UserModel;
   loginForm!: FormGroup;
 
@@ -31,8 +31,7 @@ export class ReactiveFormComponent implements OnInit{
 
   infoForm!: FormGroup;
 
-  constructor(private location: Location, ){
-      // this.user = new UserModel("", "", "", "", "");
+  constructor(private location: Location, ){;
   }
 
   ngOnInit(): void{
@@ -101,5 +100,13 @@ export class ReactiveFormComponent implements OnInit{
     console.log(this.infoForm.value);
   }
 
+  backToLogin(){
+    this.formType = this.getFormType.LOGIN;
+    this.location.go(this.location.path())
+  }
 
+  backToRegister(){
+    this.formType = this.getFormType.REGISTER;
+    this.location.go(this.location.path())
+  }
 }

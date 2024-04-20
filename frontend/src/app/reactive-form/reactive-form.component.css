@@ -91,6 +91,10 @@
     user-select: none;
 }
 
+input:-webkit-autofill {
+    background-color: transparent !important;
+}
+
 .submit_button{
     width: 160px;
     height: 40px;
