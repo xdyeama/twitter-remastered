@@ -202,7 +202,7 @@ header a.active {
         padding: 20px;
         width: 300px;
         position: fixed;
-        top: 460px; 
+        top: 500px; 
 
         /* дивки отдельные для ngModel */
         .recommended-users {
@@ -243,31 +243,29 @@ header a.active {
     position: fixed;
     right: 25px;
 
-    .trends{
-        margin: 20px 0px;
+    .recommended-users {
+        font-size: 14px;
+        margin: 20px 10px 20px 10px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        text-decoration: none;
-    
-        h5{
-            font-weight: 500;
-            font-size: 14px;
+        justify-content: space-between;
+
+        .recommended-user-ava {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 10px 0;
         }
-    
-        button{
-            background-color:#1a2730;
-            border: none;
-            font-size: 9px;
-            cursor: pointer;
-        }
-    
-        p{
+
+        button {
+            padding: 8px;
+            height: 28px;
+            border-radius: 20px;
+            background-color: white;
+            color: black;
             font-size: 10px;
-            color: gray;
-            font-weight: 100;
+            border: none;
         }
-    
     }
 }
 
@@ -279,14 +277,12 @@ header a.active {
 }
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 10px;
+    background:#2f3c43
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: gray;
+    background:#1d2c36;
 }
 
 
@@ -328,6 +324,7 @@ header a.active {
             width: 20px;
         }
     }
+    
 
     .img-submit:hover{
         background-color: rgba(128, 128, 128, 0.514);
@@ -367,67 +364,11 @@ header a.active {
     }
 }
 
-/* .buttons{
-    margin-top: 10px;
-    display: inline;
-    justify-content: space-between;
-} */
 
 
-/* all posts of users */
-.tweet-post {
-    width: calc(100vw - 755px);
-    background-color: #1a2730;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    line-height: 22px;
-    padding: 20px;
-}
 
-.tweet-user {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 333px;
-}
 
-.tweet-content {
-    margin-bottom: 10px;
-    p {
-        margin: 13px 0px 9px 0px;
-        color: rgb(224, 221, 221);
-        font-size: 15px;
-        font-weight: 100;
-        word-spacing: 3px;
-    }
 
-    img{
-        border-radius: 10px;
-        border: 1px solid gray;
-    }
-}
-
-.comment-like {
-    display: inline-flex;
-    align-items: baseline;
-    margin-top: 20px;
-    width: 120px;
-}
-
-.comment-like span{
-    font-size: 13px;
-    font-weight: 300;
-
-    button {
-        background-color: transparent;
-        border: transparent;
-        margin: 0 5px 0 5px;
-    }
-    .comments {
-        width: 38px;
-    }
-}
 
 /* общие */
 .show-more {

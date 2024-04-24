@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { FollowersList, User } from './user.model';
-import { Tweet } from './tweet.model';
+import { FollowersList, User } from '../models/user.model';
+import { Tweet } from '../models/tweet.model';
+import { TokenService } from './token.service';
+
 
 @Injectable({
     providedIn: 'root'

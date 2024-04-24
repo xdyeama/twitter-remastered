@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FollowersList } from '../user.model';
+import { FollowersList } from '../models/user.model';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

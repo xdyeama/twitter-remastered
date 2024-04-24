@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Like, Tweet } from '../tweet.model';
+import { Like, Tweet } from '../models/tweet.model';
 import { NgIconsModule } from '@ng-icons/core';
 import { heroChatBubbleOvalLeft, heroHeart } from '@ng-icons/heroicons/outline';
 import { provideIcons } from '@ng-icons/core';
 import { EventEmitter } from '@angular/core';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../services/tweet.service';
 import { UserModel } from '../models/UserModel';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import { User } from '../models/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tweet',
@@ -20,7 +20,7 @@ import { UserService } from '../user.service';
   styleUrl: './tweet.component.css'
 })
 export class TweetComponent implements OnInit {
-  @Input() tweet !: Tweet;
+  @Input() tweet!: Tweet;
   @Output() remove = new EventEmitter();
 
   likes !: Like[]

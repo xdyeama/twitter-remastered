@@ -119,7 +119,7 @@ export class ReactiveFormComponent implements OnInit {
             console.log(res)
             sessionStorage.setItem("access_token", res.access)
             localStorage.setItem("refresh_token", res.refresh)
-            this.router.navigateByUrl('/tweets/1');
+            this.router.navigateByUrl('/feed');
           }
         );
     }
