@@ -52,13 +52,31 @@
                 </div>
             </div>
         </div>
-        <button class="submit_button" type="submit" >Register</button>
+        <button class="submit_button"  type="submit" >Register</button>
     </form>
     <form *ngIf="formType == getFormType.INFO" id="info_form" class="custom_form" [class.active]="formType == getFormType.INFO" [formGroup]="infoForm" (ngSubmit)="onInfoSubmit()" autocomplete="off">
         <img src="../../assets/logo.png" class="login_logo"/> 
         <h2 class="login_title">Register to Twitter</h2>
         <div class="inputs_container adjust_container">
-            <!-- <bwm-image-upload></bwm-image-upload> -->
+             <div class="avatar-container">
+                <div class="image-container" *ngIf="file; else placeholder"
+                [ngClass]="{'box-shadow-avatar': !!file}"
+                [ngStyle]="{backgroundImage: 'url(' + file + ')'}">
+                </div>
+
+                <ng-template #placeholder>
+                    <div class="image-container avatar-placeholder">
+                    </div>
+                </ng-template>
+
+                <label for="avatar-input-file">
+                    <div class="icon-wrapper">
+                        <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChange($event)"/>
+                        <mat-icon class="icon" fontIcon="edit"></mat-icon>
+                    </div>
+                </label>
+
+            </div>
             <div class="input_container">
                 <input class="input" type="text" placeholder="Your name" formControlName="name" required/>
             </div>

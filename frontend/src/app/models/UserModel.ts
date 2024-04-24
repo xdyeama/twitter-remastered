@@ -1,5 +1,5 @@
 import { Directive, model } from '@angular/core';
-import { ImageSnippet } from '../image-upload/image-upload.component';
+
 
 
 @Directive()
@@ -11,4 +11,10 @@ export class UserModel{
     image = model<string | null>();
     
     constructor(email: string = "", password: string = "", name: string = "", surname: string="", image: string = ""){}
+}
+
+
+export interface AuthModel{
+    email: string
+    password: string
 }
