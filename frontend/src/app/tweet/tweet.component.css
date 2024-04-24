@@ -1,0 +1,157 @@
+.pfp-holder {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    border-radius: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(21, 32, 43, 255);
+    z-index: 1;
+}
+
+.pfp {
+    width: 95%;
+    height: 95%;
+    border-radius: 100%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+.tweet {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border: solid 1px;
+    border-color: #d4dfe89f;
+    font-size: medium;
+}
+
+strong {
+    font-size: large;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-right: 10px;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-around;
+}
+
+button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: transparent;
+    border-radius: 100%;
+    color: #d4dfe89f;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px 10px 5px;
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+button:hover {
+    background-color: rgba(0, 136, 255, 0.268);
+}
+
+.tweet-contents {
+    width: 90%;
+    margin: 0 10px 0 10px;
+}
+
+.content {
+    font-size: large;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
+
+.stats p {
+    font-size: 19px;
+    margin-right: 20px;
+    margin-left: 5px;
+}
+
+#like:hover {
+    color: gray;
+    transition: color 0.3s ease;
+}
+
+.liked {
+    color: red;
+}
+
+
+a {
+    color: #d4dfe89f;
+}
+
+a:hover {
+    color: gray;
+    transition: color 0.3s ease;
+}
+
+hr {
+    width: 80%;
+    color: #d4dfe81a;
+    border-color: #d4dfe83c;
+
+    margin-bottom: 10px;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    /* Ensures modal overlays content */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 10;
+    /* Ensures modal appears above other elements */
+}
+
+.modal-content {
+    background-color: rgba(21, 32, 43, 255);
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 10px rgba(222, 222, 222, 0.1);
+    /* Subtle shadow */
+}
+
+.modal-content button {
+    margin: 5px;
+    padding: 20px 40px 20px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#delete:hover {
+    background-color: #ff434346;
+}
+
+.modal-content button.cancel {
+    background-color: #919191;
+}

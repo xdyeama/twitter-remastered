@@ -52,12 +52,12 @@ Request body example:
 ### Get user details
 
 ```http
-  GET /api/users/${id}
+  GET /api/users/${username}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 Response example
 ```
@@ -76,12 +76,11 @@ Response example
 ### Patch user details
 
 ```http
-  PATCH /api/users/${id}
+  PATCH /api/users/${username}
 ```
-
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 Request body example - all fields are optional
 ```
@@ -97,23 +96,23 @@ Request body example - all fields are optional
 ### Delete user
 
 ```http
-  DELETE /api/users/${id}
+  DELETE /api/users/${username}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 
 ### Update profile pic
 
 ```http
-  PATCH /api/users/${id}/pfp
+  PATCH /api/users/${username}/pfp
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 | Body Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -122,12 +121,12 @@ Request body example - all fields are optional
 ### Update profile banner
 
 ```http
-  PATCH /api/users/${id}/banner
+  PATCH /api/users/${username}/banner
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 | Body Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -138,12 +137,12 @@ Request body example - all fields are optional
 ### Get followers and followings
 
 ```http
-  GET /api/users/${id}/follows
+  GET /api/users/${username}/follows
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 Response body example
 ```
@@ -176,12 +175,12 @@ Response body example
 ### Follow someone
 
 ```http
-  POST /api/users/${id}/follows
+  POST /api/users/${username}/follows
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 Request body example - temporary solution
 ```
@@ -194,12 +193,12 @@ Request body example - temporary solution
 ### Unfollow someone
 
 ```http
-  DELETE /api/users/${id}/follows
+  DELETE /api/users/${username}/follows
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required**. Id of item to fetch |
+| `username`      | `string` | **Required**. Id of item to fetch |
 
 Request body example - temporary solution
 ```
