@@ -3,32 +3,32 @@
     <header>
         <img src="../../assets/logo.png" class = 'twitter-logo'>
         <div class="header-right">
-        <a class="active" href="#home"> <img src="../../assets/home.png" class = 'home-icon'>Home</a>
-        <a href="#contact"><img [src]="users[0].ava" class = 'profile'> {{users[0].handle}}</a>
+        <a class="active" [routerLink]="['/feed']"> <img src="../../assets/home.png" class = 'home-icon'>Home</a>
+        <a [routerLink]="['/', currUser.username]"><img [src]="currUser.profile.pfp" class = 'profile'> {{currUser.username}}</a>
         </div>
     </header>
     
     <section class = 'page-content'>
         <aside class = 'left-sidebar'>
 
-            <div class="user-profile" *ngIf="users && users.length > 0">
+            <div class="user-profile" *ngIf="currUser">
 
                 <div class="active-user">
-                    <img [src]="users[0].ava" class = "recommended-user-ava">
-                    <p class = 'handle' >{{users[0].handle}}</p>
-                    <p class = 'tagname' >{{users[0].tagname}}</p>
-                    <p class = 'bio'> {{users[0].bio}}</p>
+                    <img [src]="currUser.profile.pfp" class = "recommended-user-ava">
+                    <p class = 'handle' >{{currUser.username}}</p>
+                    <p class = 'tagname' >{{currUser.username}}</p>
+                    <p class = 'bio'> {{currUser.profile.bio}}</p>
                 </div>
 
                 <div class="active-user-data">
                     <hr>
                     <div class = 'followers-data'>
                         <div>
-                            <p class = 'count-follower'>{{users[0].followers}}</p> <p class="followers">Followers</p> 
+                            <p class = 'count-follower'>{{followed.length}}</p> <p class="followers">Followers</p> 
                         </div>
                         <div class = 'vertical-line'></div>
                         <div >
-                            <p class = 'count-follower'>{{users[0].following}}</p> <p class="following">Following</p>
+                            <p class = 'count-follower'>{{followers.length}}</p> <p class="following">Following</p>
                         </div>
                     </div>
                     <hr>
@@ -37,25 +37,6 @@
 
 
             </div>
-    
-            <div class = 'following-rec'>
-                <h4>Who is to follow you</h4>
-
-                <div class = "recommended-users" *ngIf="users && users.length > 0">
-                    <img [src]="users[0].ava" class = "recommended-user-ava">
-
-                    <div class="username">
-                        <p class = 'handle'>{{users[0].handle}}</p>
-                        <p class = 'tagname'>{{users[0].tagname}}</p>
-                    </div>
-
-                    <button>Follow</button>
-
-                </div>
-
-                <a href="#" class = 'show-more'>Show More...</a>
-            </div>
-
         </aside>
 
 
@@ -65,8 +46,8 @@
             <div class="tweet-posting">
 
                 <form>
-                    <img [src]="users[0].ava" class = 'user-post-ava'>
-                    <div *ngIf="users && users.length > 0">
+                    <img [src]="currUser.profile.pfp" class = 'user-post-ava'>
+                    <div *ngIf="currUser">
                         <textarea rows="5" cols="50" placeholder="What's new?!"></textarea>
                     </div>
                 </form>
@@ -83,45 +64,31 @@
             </div>
 
 
-            <div *ngIf="users && users.length > 0">
-                <div *ngFor="let post of users[0].posts" class='tweet-post' >
-                    <div class="tweet-user">
-                        <img [src]="users[0].ava" class = 'user-post-ava'>
-                        <p class = 'handle'>{{users[0].handle}}</p>
-                        <p class = 'tagname'>{{users[0].tagname}} </p>
-                        <p class = 'date'> · {{formatDate(post.date)}} </p>
-                    </div>
-
-                    <div class="tweet-content">
-                        <p>{{ post.content }}</p>
-                        <img [src] = "post.photo">
-                    </div>
-                    <hr>
-                    <div class="comment-like">
-                        <span><button style="font-size: 18px;">&#10084;</button>{{ post.likes }}</span>
-                        <span><button><img src="../../assets/comments.png" class = 'comments'></button>{{ post.comments.length}}</span>
-                    </div>
+                <div *ngFor="let tweet of tweets" class='tweet-post' >
+                    <app-tweet [tweet]="tweet"></app-tweet>
                 </div>
-
-            </div>
         </div>
     
 
+
+
         <aside class = 'right-sidebar'>
-           <h4>Trend for you</h4>
+            <h4>Who is to follow you</h4>
 
-           <div *ngFor="let post of posts">
+            <div class = "recommended-users" *ngFor="let f of followed">
+                <img [src]="f.profile.pfp" class = "recommended-user-ava">
 
-                <a href= "#" class = "trends">
-                    <h5>#{{ post.title }}</h5>
-                    <p>{{ post.likes }} Likes | {{ post.comments.length }} Comments</p>
-                    <button>· · ·</button>
-                </a>
-                
+                <div class="username">
+                    <p class = 'handle'>{{f.profile.name}}</p>
+                    <p class = 'tagname'>{{f.profile.name}}</p>
+                </div>
+
+                <button>Follow</button>
+
             </div>
 
+            
             <a class = 'show-more' href="#">Show More...</a>
-
         </aside>
 
     </section>

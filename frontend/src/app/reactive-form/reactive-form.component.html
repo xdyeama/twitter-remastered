@@ -75,14 +75,11 @@
         <img src="../../assets/logo.png" class="login_logo" />
         <h2 class="login_title">Register to Twitter</h2>
         <div class="inputs_container adjust_container">
-            <div class="avatar-container">
+            <!-- <div class="avatar-container">
                 <div class="image-container" *ngIf="file; else placeholder" [ngClass]="{'box-shadow-avatar': !!file}"
                     [ngStyle]="{backgroundImage: 'url(' + file + ')'}">
                 </div>
-
                 <ng-template #placeholder>
-                    <h2 class="login_title">Register to Twitter</h2>
-
                     <label for="avatar-input-file">
                         <div class="icon-wrapper">
                             <input type="file" id="avatar-input-file" accept="image/*"
@@ -90,8 +87,8 @@
                             <mat-icon class="icon" fontIcon="edit"></mat-icon>
                         </div>
                     </label>
-
-            </div>
+                </ng-template>
+            </div> -->
             <div class="input_container">
                 <input class="input" type="text" placeholder="Your username" formControlName="username" required/>
             </div>

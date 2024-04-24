@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { FollowersList, User } from '../user.model';
-import { UserService } from '../user.service';
-import { Tweet } from '../tweet.model';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FollowersList, User } from '../models/user.model';
+import { UserService } from '../services/user.service';
+import { Tweet } from '../models/tweet.model';
 import { TweetComponent } from '../tweet/tweet.component';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../services/tweet.service';
 
 @Component({
   selector: 'app-user-page',
@@ -24,7 +24,7 @@ export class UserPageComponent {
 
 
   constructor(private route: ActivatedRoute,
-    private userService: UserService, private tweetService: TweetService) {
+    private userService: UserService, private tweetService: TweetService, private router: Router) {
   }
   follow() {
     this.userService.follow(this.user.username).subscribe(() => {
@@ -56,6 +56,9 @@ export class UserPageComponent {
     })
   }
   ngOnInit() {
+    if(sessionStorage.getItem('access_token') == null){
+      this.router.navigateByUrl("/login");
+    }
     this.route.paramMap.subscribe(params => {
       const username = params.get('username');
       if (username) {

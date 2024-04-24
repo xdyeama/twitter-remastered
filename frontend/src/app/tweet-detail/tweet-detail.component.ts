@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Tweet, Comment } from '../tweet.model';
-import { TweetService } from '../tweet.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Tweet, Comment } from '../models/tweet.model';
+import { TweetService } from '../services/tweet.service';
 import { TweetComponent } from '../tweet/tweet.component';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import { User } from '../models/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tweet-detail',
@@ -24,7 +24,8 @@ export class TweetDetailComponent implements OnInit {
   showConfirmModal = -1
   constructor(private route: ActivatedRoute,
     private tweetService: TweetService,
-    private userService: UserService) {
+    private userService: UserService,
+    private router: Router) {
   }
 
   confirmDelete(comment: Comment) {
@@ -68,6 +69,9 @@ export class TweetDetailComponent implements OnInit {
     }
   }
   ngOnInit() {
+    if(sessionStorage.getItem('access_token') == null){
+      this.router.navigateByUrl("/login");
+    }
     this.route.paramMap.subscribe(params => {
       const tweetId = Number(params.get('id'));
       if (tweetId) {

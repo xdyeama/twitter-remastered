@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Tweet, Comment, Like } from './tweet.model';
+import { Tweet, Comment, Like } from '../models/tweet.model';
 import { HttpHeaders } from '@angular/common/http';
-import { User } from './user.model';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +11,11 @@ import { User } from './user.model';
 export class TweetService {
 
     constructor(private client: HttpClient) {
+    }
+
+
+    getTweets(): Observable<Tweet[]> {
+        return this.client.get<Tweet[]>(`http://127.0.0.1:8000/api/tweets/`);
     }
 
     getTweet(id: number): Observable<Tweet> {
@@ -44,3 +49,4 @@ export class TweetService {
     }
 
 }
+
