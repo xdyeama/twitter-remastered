@@ -58,6 +58,69 @@
     user-select: none;
 }
 
+.avatar-container {
+     position: relative;
+     width: fit-content;
+ }
+ 
+.image-container {
+     height: 200px;
+     width: 200px;
+     z-index: 1;
+     border-radius: 50%;
+     background-color: #fff;
+     background-position: center;
+     background-size: cover;
+     box-shadow: 0 10px 20px 20px #6c93001a;
+ }
+
+ .icon-wrapper {
+    label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input[type='file'] {
+        display: none;
+    }
+}
+
+.icon-wrapper {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    padding: .35rem;
+    background-color:#2962FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    top: 75%;
+    z-index: 2;
+    cursor: pointer;
+}
+.icon-wrapper:hover {
+    transition: all .25s;
+    background-color:    darken(#2962FF, 15%);
+}
+
+.icon-wrapper .icon {
+    color: white;
+}
+
+.icon-wrapper label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-wrapper input[type='file'] {
+    display: none;
+}
+
 .inputs_container{
     margin-top: -20px;
     width: 75%;
@@ -82,7 +145,7 @@
 
 .input{
     width: 90%;
-    background-color: transparent;
+    background-color: #28353e;
     border: 0;
     outline: 0;
     height: 50%;
@@ -92,7 +155,7 @@
 }
 
 input:-webkit-autofill {
-    background-color: transparent !important;
+    background-color: 28353e !important;
 }
 
 .submit_button{
