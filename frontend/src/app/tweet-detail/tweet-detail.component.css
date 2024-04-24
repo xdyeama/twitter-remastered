@@ -1,0 +1,125 @@
+.tweet-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+app-tweet {
+    width: 50%;
+}
+
+.pfp-holder {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    border-radius: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(21, 32, 43, 255);
+    z-index: 1;
+}
+
+.pfp {
+    width: 95%;
+    height: 95%;
+    border-radius: 100%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+.comment {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border: solid 1px;
+    border-color: #d4dfe89f;
+    font-size: medium;
+}
+
+.comment-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-around;
+}
+
+button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: transparent;
+    border-radius: 100%;
+    color: #d4dfe89f;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px 10px 5px;
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+button:hover {
+    background-color: rgba(0, 136, 255, 0.268);
+}
+
+.comment-contents {
+    width: 90%;
+    margin: 0 10px 0 10px;
+}
+
+.comment-content {
+    color: white;
+}
+
+strong {
+    color: white;
+}
+
+input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: 0;
+    height: 50%;
+    color: white;
+    font-size: 16px;
+    user-select: none;
+}
+
+.input-holder {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 30px 20px 40px;
+    border: solid 1px;
+    border-color: #d4dfe89f;
+}
+
+.input-holder button {
+    border-radius: 20px;
+    background-color: #1DA1F2;
+    font-size: large;
+    color: white;
+    padding: 15px 30px 15px 30px;
+}
+
+.input-holder button:hover {
+    background-color: #1c82c1;
+}

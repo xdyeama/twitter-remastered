@@ -9,6 +9,10 @@ import { ImageService } from './services/image.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWTInterceptor } from './services/jwt_interceptor';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from './auth.service';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core';
+import { heroChatBubbleOvalLeft, heroHeart } from '@ng-icons/heroicons/outline';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,4 +27,11 @@ export const appConfig: ApplicationConfig = {
   ],
   
 
+    AuthService,
+    provideHttpClient(withFetch()),
+    provideIcons({ heroChatBubbleOvalLeft, heroHeart }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    })
+  ]
 };

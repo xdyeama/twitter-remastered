@@ -6,14 +6,14 @@ from api.serializers import FollowersSerializer
 
 
 @api_view(["GET", "POST", "DELETE"])
-def follow_list(request, id):
+def follow_list(request, username):
     try:
-        user = User.objects.get(id=id)
+        user = User.objects.get(username=username)
     except User.DoesNotExist as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     if request.method == "GET":
-        followers = Followers.objects.filter(followed_id=id)
-        followed = Followers.objects.filter(follower_id=id)
+        followers = Followers.objects.filter(followed_id=user.id)
+        followed = Followers.objects.filter(follower_id=user.id)
         followers_serializer = FollowersSerializer(followers, many=True)
         followed_serializer = FollowersSerializer(followed, many=True)
 
@@ -32,7 +32,7 @@ def follow_list(request, id):
         )
     if request.method == "POST":
         request_data = request.data
-        request_data["followed_id"] = id
+        request_data["followed_id"] = user.id
         serializer = FollowersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -41,7 +41,7 @@ def follow_list(request, id):
     if request.method == "DELETE":
         try:
             following = Followers.objects.get(
-                followed_id=id, follower_id=request.data["follower_id"]
+                followed_id=user.id, follower_id=request.data["follower_id"]
             )
             following.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)

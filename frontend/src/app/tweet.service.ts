@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Tweet, Comment, Like } from './tweet.model';
+import { HttpHeaders } from '@angular/common/http';
+import { User } from './user.model';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class TweetService {
+
+    constructor(private client: HttpClient) {
+    }
+
+    getTweet(id: number): Observable<Tweet> {
+
+        return this.client.get<Tweet>(`http://127.0.0.1:8000/api/tweets/${id}/`);
+    }
+    getComments(id: number): Observable<Comment[]> {
+
+        return this.client.get<Comment[]>(`http://127.0.0.1:8000/api/tweets/${id}/comments/`);
+    }
+    sendComment(id: number, content: string) {
+        const body = JSON.stringify({ user_id: 5, content: content });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.client.post(`http://127.0.0.1:8000/api/tweets/${id}/comments/`, body, { headers });
+    }
+    deleteTweet(id: number) {
+        return this.client.delete(`http://127.0.0.1:8000/api/tweets/${id}/`);
+    }
+    getLikes(id: number): Observable<Like[]> {
+
+        return this.client.get<Like[]>(`http://127.0.0.1:8000/api/tweets/${id}/like/`);
+    }
+    like(id: number) {
+        const body = JSON.stringify({ user_id: 5 });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.client.post(`http://127.0.0.1:8000/api/tweets/${id}/like/`, body, { headers });
+    }
+    dislike(id: number) {
+        return this.client.delete(`http://127.0.0.1:8000/api/likes/${id}/`);
+    }
+
+}
