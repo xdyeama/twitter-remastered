@@ -9,6 +9,7 @@ import { EventEmitter } from '@angular/core';
 import { TweetService } from '../tweet.service';
 import { UserModel } from '../models/UserModel';
 import { User } from '../user.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-tweet',
@@ -23,27 +24,13 @@ export class TweetComponent implements OnInit {
   @Output() remove = new EventEmitter();
 
   likes !: Like[]
-  emptyUser: User = {
-    id: 0,
-    username: '',
-    email: '',
-    profile: {
-      name: '',
-      pfp: '',
-      banner: '',
-      bio: ''
-    }
-  };
-  emptyLike: Like = {
-    id: 0,
-    user: this.emptyUser
-  };
+  currentUser !: User
 
   showConfirmModal = false;
   isliked = false;
 
   constructor(
-    private tweetService: TweetService) {
+    private tweetService: TweetService, private userService: UserService) {
   }
 
 
@@ -53,12 +40,19 @@ export class TweetComponent implements OnInit {
   deleteTweet(tweet: Tweet) {
     this.showConfirmModal = false;
     this.remove.emit(this.tweet.id);
+    
+  }
+  initIsLiked() {
+    this.isliked = this.likes.some(like => like.user.id === this.currentUser.id);
   }
   ngOnInit(): void {
     this.tweet.created_at = this.convertDate(this.tweet.created_at)
     this.tweetService.getLikes(this.tweet.id).subscribe(likes => {
       this.likes = likes;
-      this.isliked = likes.some(like => like.user.id === 5); // Use some() for existence check
+      this.userService.getCurrentUser().subscribe(user => {
+        this.currentUser = user;
+        this.initIsLiked();
+      })
     });
   }
   convertDate(dateString: string) {
@@ -68,21 +62,28 @@ export class TweetComponent implements OnInit {
   }
   like() {
     if (this.isliked) {
-      const likeToDelete = this.likes.filter(like => like.user.id === 5)[0]; // Assuming you have a like object
-      console.log(likeToDelete.id);
-      this.likes.pop()
-      this.isliked = !this.isliked;
-      this.tweetService.dislike(likeToDelete.id).subscribe()
-      this.tweetService.getTweet(this.tweet.id).subscribe((tweet) => {
-        this.tweet = tweet;
-      });
+      this.tweetService.dislike(this.tweet.id).subscribe(() => {
+        this.tweetService.getLikes(this.tweet.id).subscribe(likes => {
+          this.likes = likes;
+          this.initIsLiked();
+          this.tweetService.getTweet(this.tweet.id).subscribe(tweet => {
+            this.tweet = tweet;
+            this.tweet.created_at = this.convertDate(this.tweet.created_at)
+          });
+        });
+      })
+
     } else {
-      this.tweetService.like(this.tweet.id).subscribe()
-      this.likes.push(this.emptyLike)
-      this.isliked = !this.isliked;
-      this.tweetService.getTweet(this.tweet.id).subscribe((tweet) => {
-        this.tweet = tweet;
-      });
+      this.tweetService.like(this.tweet.id).subscribe(() => {
+        this.tweetService.getLikes(this.tweet.id).subscribe(likes => {
+          this.likes = likes;
+          this.initIsLiked();
+          this.tweetService.getTweet(this.tweet.id).subscribe(tweet => {
+            this.tweet = tweet;
+            this.tweet.created_at = this.convertDate(this.tweet.created_at)
+          });
+        });
+      })
     }
 
 
