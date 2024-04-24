@@ -1,8 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Material+Icons+Round");
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: rgba(21, 32, 43, 255);
+    color: #d4dfe8;
+}
+
+a {
+    text-decoration: none;
+}

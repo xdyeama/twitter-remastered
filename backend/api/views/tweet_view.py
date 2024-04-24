@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from api.models import Tweet
+from api.models import Tweet, User
 from api.serializers import TweetSerializer
 
 
@@ -31,3 +31,15 @@ def tweet_details(request, id):
     if request.method == "DELETE":
         tweet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET"])
+def users_tweets(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "GET":
+        tweets = Tweet.objects.filter(user_id=user.id)
+        serializer = TweetSerializer(tweets, many=True)
+        return Response(serializer.data)

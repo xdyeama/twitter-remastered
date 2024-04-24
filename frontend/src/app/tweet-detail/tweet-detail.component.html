@@ -1,0 +1,29 @@
+<div class="tweet-holder">
+    <app-tweet [tweet]="tweet"></app-tweet>
+    <div class="input-holder">
+        <input [(ngModel)]="usersComment" type="text" placeholder="Write your comment here"><button
+            (click)="sendComment()">Send</button>
+    </div>
+    <div *ngFor="let comment of comments" class="comment-holder">
+        <div class="comment">
+            <div class="pfp-holder">
+                <img class="pfp" src="{{'http://127.0.0.1:8000' + comment.user.profile.pfp}}" />
+            </div>
+            <div class="comment-contents">
+                <div class="comment-info">
+                    <div> <a
+                            [routerLink]="['', comment.user.username]"><strong>{{comment.user.profile.name}}</strong></a>
+                        <p>{{'@' + comment.user.username}} </p>
+                    </div>
+
+                    <button>...</button>
+                </div>
+                <div class="comment-content">
+                    <p>{{comment.content}}</p>
+                </div>
+                <small>{{comment.created_at}}</small>
+            </div>
+        </div>
+
+    </div>
+</div>
