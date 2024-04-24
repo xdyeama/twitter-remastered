@@ -111,3 +111,7 @@ button {
 button:hover {
     background-color: #d4dfe84e;
 }
+
+.follow {
+    background-color: cornflowerblue;
+}

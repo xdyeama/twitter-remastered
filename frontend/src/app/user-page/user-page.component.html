@@ -8,7 +8,10 @@
                 <div id="pfp-holder">
                     <img id="pfp" src="{{'http://127.0.0.1:8000' + user.profile.pfp}}" />
                 </div>
-                <button>Edit profile</button>
+                <button *ngIf="currentUser.id==user.id">Edit profile</button>
+                <button class="follow" *ngIf="currentUser.id!=user.id && !followed" (click)="follow()">Follow</button>
+                <button class="unfollow" *ngIf="currentUser.id!=user.id && followed"
+                    (click)="unfollow()">Unfollow</button>
             </div>
             <h2>{{user.profile.name}}</h2>
             <p>{{'@' + user.username}}</p>

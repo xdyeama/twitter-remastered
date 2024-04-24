@@ -22,7 +22,7 @@ export class TweetService {
         return this.client.get<Comment[]>(`http://127.0.0.1:8000/api/tweets/${id}/comments/`);
     }
     sendComment(id: number, content: string) {
-        const body = JSON.stringify({ user_id: 5, content: content });
+        const body = JSON.stringify({ content: content });
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.client.post(`http://127.0.0.1:8000/api/tweets/${id}/comments/`, body, { headers });
     }
@@ -34,12 +34,13 @@ export class TweetService {
         return this.client.get<Like[]>(`http://127.0.0.1:8000/api/tweets/${id}/like/`);
     }
     like(id: number) {
-        const body = JSON.stringify({ user_id: 5 });
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.client.post(`http://127.0.0.1:8000/api/tweets/${id}/like/`, body, { headers });
+        return this.client.post(`http://127.0.0.1:8000/api/tweets/${id}/like/`, {});
     }
     dislike(id: number) {
-        return this.client.delete(`http://127.0.0.1:8000/api/likes/${id}/`);
+        return this.client.delete(`http://127.0.0.1:8000/api/tweets/${id}/like/`);
+    }
+    deleteComment(id: number) {
+        return this.client.delete(`http://127.0.0.1:8000/api/comments/${id}/`)
     }
 
 }

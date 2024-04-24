@@ -6,8 +6,8 @@ import { AuthModel, UserModel } from '../models/UserModel';
 
 
 export type JWTResponse = {
-    refresh: string
-    access: string
+  refresh: string
+  access: string
 }
 
 
@@ -18,15 +18,15 @@ export class AuthService {
   isUserLoggedIn: boolean = false
   jwt_token: string = ""
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-  login(email: string, password: string){
-    return this.httpClient.post<JWTResponse>("http://127.0.0.1:8000/api/token/", {"username": email, "password": password})
+  login(email: string, password: string) {
+    return this.httpClient.post<JWTResponse>("http://127.0.0.1:8000/api/token/", { "username": email, "password": password })
 
   }
 
-  register(email: string, password: string, name: string, surname: string, image: string | null): Observable<UserModel>{
-    return this.httpClient.post<UserModel>("http://127.0.0.1:8000/api/register", {email, password, name, surname, image})
+  register(email: string, password: string, name: string, surname: string, image: string | null): Observable<UserModel> {
+    return this.httpClient.post<UserModel>("http://127.0.0.1:8000/api/register", { email, password, name, surname, image })
   }
 
 
