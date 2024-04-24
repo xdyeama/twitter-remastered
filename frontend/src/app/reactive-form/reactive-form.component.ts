@@ -75,10 +75,7 @@ export class ReactiveFormComponent implements OnInit{
       image: new FormControl('', [
         Validators.required,
       ]),
-      name: new FormControl('', [
-        Validators.required,
-      ]),
-      surname: new FormControl('', [
+      username: new FormControl('', [
         Validators.required,
       ]),
   });
@@ -121,7 +118,7 @@ export class ReactiveFormComponent implements OnInit{
                     console.log(res)
                     sessionStorage.setItem("access_token", res.access)
                     localStorage.setItem("refresh_token", res.refresh)
-                    this.router.navigateByUrl('/');
+                    this.router.navigateByUrl('/feed');
                 }
             );
     }
@@ -134,12 +131,25 @@ export class ReactiveFormComponent implements OnInit{
 
   onRegisterSubmit(){
     console.log(this.registerForm.value);
+
     this.formType = this.getFormType.INFO;
     // this.location.go(this.location.path())
   }
 
   onInfoSubmit(){
     console.log(this.infoForm.value);
+    let email: string = this.registerForm.value.email;
+    let password: string = this.registerForm.value.password;
+    let password2: string = this.registerForm.value.confirmPassword;
+    this.authService.register(email, password, password2, this.infoForm.value.username)
+        .subscribe(
+          (res) => {
+            console.log(res)
+            if(res){
+              this.router.navigateByUrl('/feed');
+            }
+          }
+        )
   }
 
   backToLogin(){

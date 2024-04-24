@@ -25,8 +25,8 @@ export class AuthService {
 
   }
 
-  register(email: string, password: string, name: string, surname: string, image: string | null): Observable<UserModel>{
-    return this.httpClient.post<UserModel>("http://127.0.0.1:8000/api/register", {email, password, name, surname, image})
+  register(email: string, password: string, password2: string, username: string): Observable<UserModel>{
+    return this.httpClient.post<UserModel>("http://127.0.0.1:8000/api/users/", {"email": email, "password": password, "password2": password2,"username": username})
   }
 
 
