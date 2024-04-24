@@ -9,7 +9,6 @@ import { ImageService } from './services/image.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWTInterceptor } from './services/jwt_interceptor';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from './auth.service';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core';
 import { heroChatBubbleOvalLeft, heroHeart } from '@ng-icons/heroicons/outline';
@@ -18,15 +17,12 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-    {provide: AuthService, useClass: AuthService},
-    {provide: ImageService, useClass: ImageService},
+    { provide: AuthService, useClass: AuthService },
+    { provide: ImageService, useClass: ImageService },
     importProvidersFrom(HttpClientModule),
     importProvidersFrom(AngularCropperjsModule),
     importProvidersFrom(MatIconModule),
-    {provide:HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}, provideAnimationsAsync()
-  ],
-  
-
+    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }, provideAnimationsAsync(),
     AuthService,
     provideHttpClient(withFetch()),
     provideIcons({ heroChatBubbleOvalLeft, heroHeart }),
