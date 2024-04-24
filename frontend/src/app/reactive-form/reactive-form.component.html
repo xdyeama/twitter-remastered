@@ -7,11 +7,12 @@
         <h2 class="login_title">Log in to Twitter</h2>
         <div class="inputs_container">
             <div class="input_container">
-                <input class="input" type="text" placeholder="Username" formControlName="email" required minlength />
+                <input class="input" type="text" placeholder="Phone, email or username" formControlName="email" required
+                    minlength />
                 <div
                     *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
-                    <div *ngIf="loginForm.get('email')?.errors?.['required']">Username is required.</div>
-                    <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid username format.</div>
+                    <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</div>
                 </div>
             </div>
             <div class="input_container">
@@ -28,6 +29,7 @@
         </div>
         <button type="submit" [disabled]="!loginForm.valid" class="submit_button">Log in</button>
         <div class="buttons_container">
+            <button type="button" class="brdl_button">Forgot password?</button>
             <button type="button" class="brdl_button" (click)="moveToRegister()">Sign up for Twitter</button>
         </div>
     </form>
@@ -38,11 +40,12 @@
         <h2 class="login_title">Register to Twitter</h2>
         <div class="inputs_container">
             <div class="input_container">
-                <input class="input" type="text" placeholder="Email" formControlName="email" required minlength />
+                <input class="input" type="text" placeholder="Phone, email or username" formControlName="email" required
+                    minlength />
                 <div
                     *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
-                    <div *ngIf="registerForm.get('email')?.errors?.['required']">Username is required.</div>
-                    <div *ngIf="registerForm.get('email')?.errors?.['email']">Invalid username format.</div>
+                    <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</div>
                 </div>
             </div>
             <div class="input_container">
@@ -53,6 +56,14 @@
                     <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
                     <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8
                         characters long.</div>
+                </div>
+            </div>
+            <div class="input_container">
+                <input class="input" type="password" placeholder="Confirm password" formControlNam="confirmPassword"
+                    required minlength>
+                <div
+                    *ngIf="registerForm.hasError('passwordMismatch') && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+                    Passwords do not match.
                 </div>
             </div>
         </div>
@@ -70,23 +81,22 @@
                 </div>
 
                 <ng-template #placeholder>
-                    <div class="image-container avatar-placeholder">
-                    </div>
-                </ng-template>
+                    <h2 class="login_title">Register to Twitter</h2>
 
-                <label for="avatar-input-file">
-                    <div class="icon-wrapper">
-                        <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChange($event)" />
-                        <mat-icon class="icon" fontIcon="edit"></mat-icon>
-                    </div>
-                </label>
+                    <label for="avatar-input-file">
+                        <div class="icon-wrapper">
+                            <input type="file" id="avatar-input-file" accept="image/*"
+                                (change)="onFileChange($event)" />
+                            <mat-icon class="icon" fontIcon="edit"></mat-icon>
+                        </div>
+                    </label>
 
             </div>
             <div class="input_container">
                 <input class="input" type="text" placeholder="Your name" formControlName="name" required />
             </div>
             <div class="input_container">
-                <input class="input" type="text" placeholder="Something about you" formControlName="bio" required />
+                <input class="input" type="text" placeholder="Your surname" formControlName="surname" required />
             </div>
         </div>
         <button class="submit_button" type="submit">Register</button>
