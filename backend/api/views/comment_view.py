@@ -3,6 +3,8 @@ from api.models import Tweet, Comment
 from api.serializers import TweetSerializer, CommentsSerializer
 from rest_framework.response import Response
 from rest_framework import status
+import api.token as token
+import jwt
 
 
 class CommentList(APIView):
@@ -17,11 +19,27 @@ class CommentList(APIView):
 
     def post(self, request, id):
         try:
+            jwt_token = token.get_token(request=request)
+            payload = token.decode(jwt_token)
             tweet = Tweet.objects.get(id=id)
         except Tweet.DoesNotExist as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        request_data = request.data
-        request_data["tweet_id"] = id
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        request_data = {
+            "tweet_id": id,
+            "user_id": payload["user_id"],
+            "content": request.data["content"],
+        }
         serializer = CommentsSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
@@ -40,5 +58,23 @@ class CommentDetails(APIView):
 
     def delete(self, request, id):
         comment = Comment.objects.get(id=id)
+        try:
+            jwt_token = token.get_token(request=request)
+            payload = token.decode(jwt_token)
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        print(comment.user_id, payload["username"])
+        if str(comment.user_id) != (payload["username"]):
+            return Response(
+                {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+            )
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
