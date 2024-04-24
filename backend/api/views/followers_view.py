@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.models import Followers, User
 from api.serializers import FollowersSerializer
+import api.token as token
+import jwt
 
 
 @api_view(["GET", "POST", "DELETE"])
@@ -30,10 +32,23 @@ def follow_list(request, username):
                 "followers": followers_data,
             }
         )
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     if request.method == "POST":
-        request_data = request.data
-        request_data["followed_id"] = user.id
-        serializer = FollowersSerializer(data=request.data)
+        request_data = {"follower_id": payload["user_id"], "followed_id": user.id}
+        serializer = FollowersSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -41,9 +56,9 @@ def follow_list(request, username):
     if request.method == "DELETE":
         try:
             following = Followers.objects.get(
-                followed_id=user.id, follower_id=request.data["follower_id"]
+                followed_id=user.id, follower_id=payload["user_id"]
             )
             following.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except Followers.DoesNotExist as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Followers.DoesNotExist:
+            pass
