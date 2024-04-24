@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from api.models import Profile, Tweet, Like, Followers, Comment
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -126,3 +128,14 @@ class CommentsSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        token['email'] = user.email
+        return token

@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from api.models import Profile
-from api.serializers import UserSerializer, ProfileSerializer
+from api.serializers import UserSerializer, ProfileSerializer, MyTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 class UserList(APIView):
@@ -79,3 +80,7 @@ def update_banner(request, id):
 
     serializer = ProfileSerializer(profile)
     return Response(serializer.data)
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
