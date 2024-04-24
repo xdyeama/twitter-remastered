@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { posts, users } from '../../../../front/src/app/template';
+import { posts, users } from '../models/template';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
