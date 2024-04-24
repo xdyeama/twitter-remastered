@@ -21,7 +21,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, password: string){
-    return this.httpClient.post<JWTResponse>("http://127.0.0.1:8000/api/login", {"username": email, "password": password})
+    return this.httpClient.post<JWTResponse>("http://127.0.0.1:8000/api/token/", {"username": email, "password": password})
 
   }
 
