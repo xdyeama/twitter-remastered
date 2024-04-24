@@ -1,0 +1,41 @@
+<div class="main-holder">
+    <div class="content-holder">
+        <div class="button-holder">
+            <button [ngClass]="{'button_active': followerActive} " (click)=" toggleButton(1)">Followers</button>
+            <button [ngClass]="{'button_active': !followerActive}" (click)=" toggleButton(2)">Followings</button>
+        </div>
+        <div *ngIf="followerActive" style="width: 100%;">
+            <div *ngFor="let follower of followersList.followers" style="width: 100%;">
+                <div class="user" [routerLink]="['', follower.username]">
+                    <div class=" pfp-holder">
+                        <img class="pfp" src="{{'http://127.0.0.1:8000' + follower.profile.pfp}}" />
+                    </div>
+                    <div class="info-holder">
+                        <strong [routerLink]="['', follower.username]">{{follower.profile.name}}</strong>
+                        <p>{{'@'+follower.username}}</p>
+                        <p style="color: white; font-size: medium;">{{follower.profile.bio}}</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!followerActive" style="width: 100%;">
+            <div *ngFor="let follower of followersList.followed" style="width: 100%;">
+                <div class="user" [routerLink]="['', follower.username]">
+                    <div class=" pfp-holder">
+                        <img class="pfp" src="{{'http://127.0.0.1:8000' + follower.profile.pfp}}" />
+                    </div>
+                    <div class="info-holder">
+                        <strong>{{follower.profile.name}}</strong>
+                        <p>{{'@'+follower.username}}</p>
+                        <p style=" color: white; font-size: medium;">{{follower.profile.bio}}</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

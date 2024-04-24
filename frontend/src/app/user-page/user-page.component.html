@@ -13,7 +13,7 @@
             <h2>{{user.profile.name}}</h2>
             <p>{{'@' + user.username}}</p>
             <p id="bio">{{user.profile.bio}}</p>
-            <p><strong>{{followersList.followed.length}}</strong> Followings
+            <p [routerLink]="['./followers']"><strong>{{followersList.followed.length}}</strong> Followings
                 <strong>{{followersList.followers.length}}</strong> Followers
             </p>
         </div>
