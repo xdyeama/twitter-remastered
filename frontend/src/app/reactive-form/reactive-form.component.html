@@ -23,8 +23,8 @@
         </div>
         <button type="submit" [disabled]="!loginForm.valid" class="submit_button">Log in</button>
         <div class="buttons_container">
-            <button class="brdl_button">Forgot password?</button>
-            <button class="brdl_button">Sign up for Twitter</button>
+            <button type="button" class="brdl_button">Forgot password?</button>
+            <button type="button" class="brdl_button" (click)="moveToRegister()">Sign up for Twitter</button>
         </div>
     </form>
     <form  *ngIf="formType == getFormType.REGISTER" id="register_form" class="custom_form register_form" [class.active]="formType == getFormType.REGISTER" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" autocomplete="off">

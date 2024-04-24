@@ -103,7 +103,7 @@
 }
 .icon-wrapper:hover {
     transition: all .25s;
-    background-color: darken(#2962FF, 15%);
+    background-color:    darken(#2962FF, 15%);
 }
 
 .icon-wrapper .icon {

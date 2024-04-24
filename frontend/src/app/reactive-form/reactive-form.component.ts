@@ -43,12 +43,12 @@ export class ReactiveFormComponent implements OnInit{
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        validateEmail()
+        // Validators.minLength(6),
+        // validateEmail()
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        // Validators.minLength(8),
       ]
       ),
     });
@@ -57,7 +57,7 @@ export class ReactiveFormComponent implements OnInit{
       email: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
-        validateEmail()
+        // validateEmail()
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -108,7 +108,7 @@ export class ReactiveFormComponent implements OnInit{
   }
 
   onLoginSubmit(){
-    this.formType = this.getFormType.REGISTER;
+    // this.formType = this.getFormType.REGISTER;
     // this.location.go(this.location.path());
     const val = this.loginForm.value;
     
