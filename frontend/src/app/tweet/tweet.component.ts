@@ -7,6 +7,8 @@ import { heroChatBubbleOvalLeft, heroHeart } from '@ng-icons/heroicons/outline';
 import { provideIcons } from '@ng-icons/core';
 import { EventEmitter } from '@angular/core';
 import { TweetService } from '../tweet.service';
+import { UserModel } from '../models/UserModel';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-tweet',
@@ -21,6 +23,21 @@ export class TweetComponent implements OnInit {
   @Output() remove = new EventEmitter();
 
   likes !: Like[]
+  emptyUser: User = {
+    id: 0,
+    username: '',
+    email: '',
+    profile: {
+      name: '',
+      pfp: '',
+      banner: '',
+      bio: ''
+    }
+  };
+  emptyLike: Like = {
+    id: 0,
+    user: this.emptyUser
+  };
 
   showConfirmModal = false;
   isliked = false;
@@ -53,13 +70,15 @@ export class TweetComponent implements OnInit {
     if (this.isliked) {
       const likeToDelete = this.likes.filter(like => like.user.id === 5)[0]; // Assuming you have a like object
       console.log(likeToDelete.id);
-      this.tweetService.dislike(likeToDelete.id).subscribe()
+      this.likes.pop()
       this.isliked = !this.isliked;
+      this.tweetService.dislike(likeToDelete.id).subscribe()
       this.tweetService.getTweet(this.tweet.id).subscribe((tweet) => {
         this.tweet = tweet;
       });
     } else {
       this.tweetService.like(this.tweet.id).subscribe()
+      this.likes.push(this.emptyLike)
       this.isliked = !this.isliked;
       this.tweetService.getTweet(this.tweet.id).subscribe((tweet) => {
         this.tweet = tweet;
