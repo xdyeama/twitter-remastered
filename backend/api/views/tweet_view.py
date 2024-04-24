@@ -4,6 +4,9 @@ from rest_framework import status
 from api.models import Tweet, User
 from api.serializers import TweetSerializer
 
+import api.token as token
+import jwt
+
 
 @api_view(["GET", "POST"])
 def tweet_list(request):
@@ -11,8 +14,25 @@ def tweet_list(request):
         tweets = Tweet.objects.order_by("-created_at")
         serializer = TweetSerializer(tweets, many=True)
         return Response(serializer.data)
+
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     if request.method == "POST":
-        serializer = TweetSerializer(data=request.data)
+        request_data = request.data
+        request_data["user_id"] = payload["user_id"]
+        serializer = TweetSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -28,7 +48,26 @@ def tweet_details(request, id):
     if request.method == "GET":
         serializer = TweetSerializer(tweet)
         return Response(serializer.data)
+
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     if request.method == "DELETE":
+        if tweet.user_id != payload["user_id"]:
+            return Response(
+                {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+            )
         tweet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

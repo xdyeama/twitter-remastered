@@ -19,14 +19,41 @@ export class UserPageComponent {
   followersList!: FollowersList
   tweets!: Tweet[]
   notFound = false
+  currentUser !: User
+  followed = false
 
 
   constructor(private route: ActivatedRoute,
     private userService: UserService, private tweetService: TweetService) {
   }
+  follow() {
+    this.userService.follow(this.user.username).subscribe(() => {
+      this.userService.getFollowers(this.user.username).subscribe((followersList) => {
+        this.followersList = followersList;
+        this.followed = true;
+      })
+    })
+  }
+  unfollow() {
+    this.userService.unfollow(this.user.username).subscribe(() => {
+      this.userService.getFollowers(this.user.username).subscribe((followersList) => {
+        this.followersList = followersList;
+        this.followed = false;
+      })
+    })
+  }
   onTweetRemove(id: number) {
-    this.tweets = this.tweets.filter((t) => t.id !== id);
-    this.tweetService.deleteTweet(id).subscribe()
+    this.tweetService.deleteTweet(id).subscribe(() => {
+      this.userService.getTweets(this.user.username).subscribe(
+        tweets => {
+          this.tweets = tweets;
+        },
+        error => {
+          console.error('User not found:', error);
+          this.notFound = true
+        }
+      );
+    })
   }
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -35,21 +62,28 @@ export class UserPageComponent {
         this.userService.getUser(username).subscribe(
           user => {
             this.user = user;
+            this.userService.getCurrentUser().subscribe(current => {
+              this.currentUser = current;
+              this.userService.getFollowers(username).subscribe(
+                followersList => {
+                  this.followersList = followersList;
+
+                  this.followed = (this.followersList.followers.some(follower => follower.id === this.currentUser.id));
+                  console.log(this.followersList.followers, this.currentUser)
+                },
+                error => {
+                  console.error('User not found:', error);
+                  this.notFound = true
+                }
+              );
+            });
           },
           error => {
             console.error('User not found:', error);
             this.notFound = true
           }
         );
-        this.userService.getFollowers(username).subscribe(
-          followersList => {
-            this.followersList = followersList;
-          },
-          error => {
-            console.error('User not found:', error);
-            this.notFound = true
-          }
-        );
+
         this.userService.getTweets(username).subscribe(
           tweets => {
             this.tweets = tweets;
@@ -59,6 +93,7 @@ export class UserPageComponent {
             this.notFound = true
           }
         );
+
       }
     });
   }

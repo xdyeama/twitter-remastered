@@ -16,6 +16,10 @@ export class UserService {
 
         return this.client.get<User>(`http://127.0.0.1:8000/api/users/${username}`);
     }
+    getCurrentUser(): Observable<User> {
+
+        return this.client.get<User>(`http://127.0.0.1:8000/api/users/current/`);
+    }
 
     getFollowers(username: string): Observable<FollowersList> {
 
@@ -24,6 +28,12 @@ export class UserService {
 
     getTweets(username: string): Observable<Tweet[]> {
         return this.client.get<Tweet[]>(`http://127.0.0.1:8000/api/users/${username}/tweets`);
+    }
+    follow(username: string) {
+        return this.client.post(`http://127.0.0.1:8000/api/users/${username}/follows/`, {});
+    }
+    unfollow(username: string) {
+        return this.client.delete(`http://127.0.0.1:8000/api/users/${username}/follows/`);
     }
 
 

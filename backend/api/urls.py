@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path("users/", views.UserList.as_view()),
+    path("users/current/", views.get_current_user),
     path("users/<str:username>", views.UserDetail.as_view()),
     path("users/<str:username>/tweets", views.users_tweets),
     path("users/<str:username>/pfp", views.update_pfp),
@@ -15,6 +16,6 @@ urlpatterns = [
     path("tweets/<int:id>/comments/", views.CommentList.as_view()),
     path("comments/<int:id>/", views.CommentDetails.as_view()),
     path("likes/<int:id>/", views.LikeDetail.as_view()),
-    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("token/", views.MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

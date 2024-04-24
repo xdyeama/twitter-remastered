@@ -4,8 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from api.models import Profile
-from api.serializers import UserSerializer, ProfileSerializer, MyTokenObtainPairSerializer
+from api.serializers import (
+    UserSerializer,
+    ProfileSerializer,
+    MyTokenObtainPairSerializer,
+)
 from rest_framework_simplejwt.views import TokenObtainPairView
+import api.token as token
+import jwt
 
 
 class UserList(APIView):
@@ -34,23 +40,74 @@ class UserDetail(APIView):
     def patch(self, request, username):
         try:
             user = User.objects.get(username=username)
+            jwt_token = token.get_token(request=request)
+            payload = token.decode(jwt_token)
+            if payload["user_id"] != user.id:
+                return Response(
+                    {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+                )
             serializer = UserSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+            )
         except User.DoesNotExist as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, username):
-        user = User.objects.get(username=username)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            user = User.objects.get(username=username)
+            jwt_token = token.get_token(request=request)
+            payload = token.decode(jwt_token)
+            if payload["user_id"] != user.id:
+                return Response(
+                    {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+                )
+            user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["PATCH"])
 def update_pfp(request, username):
     user = User.objects.get(username=username)
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+        if payload["user_id"] != user.id:
+            return Response(
+                {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+            )
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     profile = Profile.objects.get(user_id=user.id)
 
     if "pfp" not in request.FILES:
@@ -69,6 +126,23 @@ def update_pfp(request, username):
 @api_view(["PATCH"])
 def update_banner(request, username):
     user = User.objects.get(username=username)
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+        if payload["user_id"] != user.id:
+            return Response(
+                {"error": "access denied"}, status=status.HTTP_403_FORBIDDEN
+            )
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     profile = Profile.objects.get(user_id=user.id)
 
     if "banner" not in request.FILES:
@@ -86,3 +160,23 @@ def update_banner(request, username):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(["GET"])
+def get_current_user(request):
+    try:
+        jwt_token = token.get_token(request=request)
+        payload = token.decode(jwt_token)
+        user = User.objects.get(id=payload["user_id"])
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    except jwt.ExpiredSignatureError:
+        return Response(
+            {"error": "jwt token has expired"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except jwt.InvalidTokenError:
+        return Response(
+            {"error": "invalid jwt token"}, status=status.HTTP_400_BAD_REQUEST
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

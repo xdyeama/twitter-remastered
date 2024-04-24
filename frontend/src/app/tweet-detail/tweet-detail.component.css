@@ -123,3 +123,45 @@ input {
 .input-holder button:hover {
     background-color: #1c82c1;
 }
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    /* Ensures modal overlays content */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 10;
+    /* Ensures modal appears above other elements */
+}
+
+.modal-content {
+    background-color: rgba(21, 32, 43, 255);
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 10px rgba(222, 222, 222, 0.1);
+    /* Subtle shadow */
+}
+
+.modal-content button {
+    margin: 5px;
+    padding: 20px 40px 20px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#delete:hover {
+    background-color: #ff434346;
+}
+
+.modal-content button.cancel {
+    background-color: #919191;
+}
