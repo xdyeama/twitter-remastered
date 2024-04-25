@@ -18,19 +18,22 @@ import { TokenService } from '../services/token.service';
 
 export class FeedComponent implements OnInit{
   currUser!: User;
+  username: string;
   followed!: User[];
   followers!: User[];
   tweets!: Tweet[];
+  tweetText: string = '';
 
   recommendedTweets!: Tweet[];
 
   constructor(private tweetService: TweetService, private userService: UserService, private router: Router,
     private tokenService: TokenService
   ) {
+    this.username = this.getUsername();
   }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('access_token') == null){
+    if(!sessionStorage.getItem("access")){
       this.router.navigateByUrl("/login");
     }
 
@@ -42,7 +45,7 @@ export class FeedComponent implements OnInit{
       this.currUser = currUser;
     })
     
-    this.userService.getFollowers(this.getUsername()).subscribe( follow => {
+    this.userService.getFollowers(this.username).subscribe( follow => {
       this.followed = follow.followed;
       this.followers = follow.followers;
     })
@@ -58,7 +61,23 @@ export class FeedComponent implements OnInit{
   }
 
   private getUsername(){
-    return this.tokenService.getDecodedAccessToken(sessionStorage.getItem("acceess_token")!)
+    return this.tokenService.getDecodedAccessToken(sessionStorage.getItem("access")!).username
   }
   
+  postTweet() {
+    const userID = this.tokenService.getDecodedAccessToken(sessionStorage.getItem("acceess")!).user_id
+    this.tweetService.postTweet(userID, this.tweetText).subscribe(
+      (response) => {
+        // Handle successful tweet submission
+        console.log('Tweet posted:', response);
+        // Optionally, you may want to update your tweet list here
+        // this.fetchTweets();
+      },
+      (error) => {
+        // Handle error
+        console.error('Error posting tweet:', error);
+      }
+    );
+
+  }
 }

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ImageSnippet } from '../models/ImageSnippet';
 import { ImageService } from '../services/image.service';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 
 export enum FormType {
@@ -20,7 +21,7 @@ export enum FormType {
 @Component({
   selector: 'app-reactive-form',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, NgClass, NgStyle, MatIconModule],
+  imports: [NgIf, ReactiveFormsModule, NgClass, NgStyle, MatIconModule, ImageUploadComponent],
   templateUrl: './reactive-form.component.html',
   styleUrl: './reactive-form.component.css'
 })
@@ -41,6 +42,9 @@ export class ReactiveFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem("access")){
+      this.router.navigateByUrl('feed')
+    }
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -58,7 +62,7 @@ export class ReactiveFormComponent implements OnInit {
       email: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
-        // validateEmail()
+        validateEmail()
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -117,8 +121,8 @@ export class ReactiveFormComponent implements OnInit {
         .subscribe(
           (res) => {
             console.log(res)
-            sessionStorage.setItem("access_token", res.access)
-            localStorage.setItem("refresh_token", res.refresh)
+            sessionStorage.setItem("access", res.access)
+            localStorage.setItem("refresh", res.refresh)
             this.router.navigateByUrl('/feed');
           }
         );
@@ -147,7 +151,8 @@ export class ReactiveFormComponent implements OnInit {
           (res) => {
             console.log(res)
             if(res){
-              this.router.navigateByUrl('/feed');
+              this.router.navigateByUrl('/login');
+              this.formType = this.getFormType.LOGIN
             }
           }
         )

@@ -45,22 +45,21 @@
 
             <div class="tweet-posting">
 
-                <form>
+                <form (ngSubmit)="postTweet()">
                     <img [src]="currUser.profile.pfp" class = 'user-post-ava'>
                     <div *ngIf="currUser">
-                        <textarea rows="5" cols="50" placeholder="What's new?!"></textarea>
+                        <textarea rows="5" cols="50" placeholder="What's new?!" [value]="username" (input)="username"></textarea>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="submit" class = 'tweet-submit'>
+                            Tweet
+                        </button>
+                        <button class='img-submit'>
+                            <img src="../../assets/images.png" alt="">
+                        </button>
                     </div>
                 </form>
-
-                <div class="buttons">
-                    <button class = 'tweet-submit'>
-                        Tweet
-                    </button>
-                    <button class = 'img-submit'>
-                        <img src="../../assets/images.png" alt="">
-                    </button>
-                </div>
-
             </div>
 
 

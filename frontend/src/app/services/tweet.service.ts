@@ -14,6 +14,13 @@ export class TweetService {
     }
 
 
+    postTweet(userID: string, content: string): Observable<Tweet>{
+        let body = { 
+            "user_id": userID,
+            "content": content
+        }
+        return this.client.post<Tweet>(`http://127.0.0.1:8000/api/tweets/`, body)
+    }
     getTweets(): Observable<Tweet[]> {
         return this.client.get<Tweet[]>(`http://127.0.0.1:8000/api/tweets/`);
     }

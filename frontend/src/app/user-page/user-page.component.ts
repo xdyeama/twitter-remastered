@@ -56,7 +56,7 @@ export class UserPageComponent {
     })
   }
   ngOnInit() {
-    if(sessionStorage.getItem('access_token') == null){
+    if(localStorage.getItem('access_token') == null){
       this.router.navigateByUrl("/login");
     }
     this.route.paramMap.subscribe(params => {

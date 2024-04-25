@@ -7,6 +7,7 @@ import { FeedComponent } from './feed/feed.component';
 
 
 export const routes: Routes = [
+    { path: '', redirectTo: 'feed', pathMatch: 'full'},
     { path: 'login', component: ReactiveFormComponent, title: 'Login page'},
     { path: 'feed', component: FeedComponent, title: 'Feed'},
     { path: ':username', component: UserPageComponent, title: 'User page'},
